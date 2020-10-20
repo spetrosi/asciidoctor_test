@@ -5,8 +5,8 @@
     name: asciidoctor
     state: present
 
-- name: Build HTML in {{ build_directory }} using {{ in_file }}
+- name: Build HTML in {{ directory }} using {{ source_file }}
   asciidoctor_wrapper:
-    directory: "{{ build_directory }}"
-    in-file: "{{ in_file }}"
-    out-file: "{{ out_file }}"
+    directory: "{{ directory }}"
+    source_file: "{{ source_file }}"
+    output_file: "{{ output_file }}"
