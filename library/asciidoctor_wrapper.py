@@ -105,9 +105,13 @@ def run_module():
         result['changed'] = False
 
     else:
-        module.run_command(["asciidoctor", "-b html5", "--out-file {0}".format(output_file), "{}".format(source_file)])
+        (rc, out, err) = module.run_command("asciidoctor -b html5 --out-file {0} {1}".format(output_file, source_file), cwd=directory)
         result['message'] = 'The {0} file has been created'.format(output_file)
         result['changed'] = True
+        result['rc'] = rc
+        result['out'] = out
+        result['err'] = err
+
 
     # during the execution of the module, if there is an exception or a
     # conditional state that effectively causes a failure, run
