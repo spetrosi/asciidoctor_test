@@ -2,23 +2,18 @@
 
 This role runs asciidoctor to build AsciiDoc source files into the HTML5 format. 
 
-## Requirements
-
-Any pre-requisites that may not be covered by Ansible itself or the role should
-be mentioned here. For instance, if the role uses the EC2 module, it may be a
-good idea to mention in this section that the `boto` package is required.
-
 ## Role Variables
 
-A description of all input variables (i.e. variables that are defined in
-`defaults/main.yml`) for the role should go here as these form an API of the
-role.
+This role requires you to provide three variables:
 
-Variables that are not intended as input, like variables defined in
-`vars/main.yml`, variables that are read from other roles and/or the global
-scope (ie. hostvars, group vars, etc.) can be also mentioned here but keep in
-mind that as these are probably not part of the role API they may change during
-the lifetime.
+### directory
+Path where the AsciiDoc files that you want to build are stored.
+
+### source_file
+The filename of the AsciiDoc top level item file. For example, master.adoc.
+
+### output_file
+The filename of the HTML file that you want to build. This file will be stored in the directory provided by the directory variable.
 
 Example of setting the variables:
 
@@ -27,27 +22,6 @@ directory: "path/to/adoc/files"
 source_file: "master.adoc"
 output_file: "build.html"
 ```
-
-### Variables Exported by the Role
-
-This section is optional.  Some roles may export variables for playbooks to
-use later.  These are analogous to "return values" in Ansible modules.  For
-example, if a role performs some action that will require a system reboot, but
-the user wants to defer the reboot, the role might set a variable like
-`template_reboot_needed: true` that the playbook can use to reboot at a more
-convenient time.
-
-Example:
-
-`template_reboot_needed` - default `false` - if `true`, this means
-a reboot is needed to apply the changes made by the role
-
-## Dependencies
-
-A list of other roles hosted on Galaxy should go here, plus any details in
-regards to parameters that may need to be set for other roles, or variables
-that are used from other roles.
-
 ## Example Playbook
 
 ```yaml
@@ -59,13 +33,21 @@ that are used from other roles.
 
   roles:
     - linux-system-roles.asciidoctor_test
+
+- name: Build the art-Release_Notes guide
+  hosts: localhost
+  vars:
+    test_directory: /home/username/Documents/art-Release_Notes
+  tasks:
+    - name: Test the role
+      import_role:
+        name: asciidoctor_test
+      vars:
+        directory: "{{ test_directory }}"
+        source_file: "master.adoc"
+        output_file: "guide.html"
 ```
 
 ## License
 
 MIT
-
-## Author Information
-
-An optional section for the role authors to include contact information, or a
-website (HTML is not allowed).
