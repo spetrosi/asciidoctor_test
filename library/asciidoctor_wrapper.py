@@ -9,11 +9,11 @@ DOCUMENTATION = r'''
 ---
 module: asciidoctor_wrapper
 
-short_description: Build HTML output from AsciiDoc files.
+short_description: Build HTML output from AsciiDoc books.
 
 version_added: "1.0.0"
 
-description: This module uses the asciidoctor CLI tool to build AsciiDoc files into the HTML output.
+description: This module uses the asciidoctor CLI tool to build AsciiDoc books into the HTML output.
 
 options:
     directory:
@@ -21,25 +21,22 @@ options:
         required: true
         type: str
     source_file:
-        description: Defines the master AsciiDoc file that is used for the build.
+        description: Defines the top level AsciiDoc file that is used for the build.
         required: true
         type: str
     output_file:
-        description: Defines the file where the HTML build is stored.
+        description: Defines the file where the HTML build is stored. The module creates the output file in the directory where the source file is stored.
         required: true
         type: str
-# Specify this value according to your collection
-# in format of namespace.collection.doc_fragment_name
-extends_documentation_fragment:
-    - my_namespace.my_collection.my_doc_fragment_name
 
 author:
     - Sergei Petrosian (@spetrosi)
 '''
 
 EXAMPLES = r'''
-# Build the AsciiDoc files from the `/home/username/Documents/guide` directory to the guide.html file.
-- name: Build HTML for `/home/username/Documents/guide`
+# Build the AsciiDoc book in the `/home/username/Documents/guide` directory to the guide.html file.
+# The resulting build is stored in the /home/username/Documents/guide/guide.html directory
+- name: Build HTML from a book in `/home/username/Documents/guide`
   asciidoctor_wrapper:
     directory: "/home/username/Documents/guide"
     source_file: master.adoc
