@@ -20,11 +20,11 @@ options:
         description: Defines the directory from where the asciidoctor must run.
         required: true
         type: str
-    in-file:
+    source_file:
         description: Defines the master AsciiDoc file that is used for the build.
         required: true
         type: str
-    out-file:
+    output_file:
         description: Defines the file where the HTML build is stored.
         required: true
         type: str
@@ -42,8 +42,8 @@ EXAMPLES = r'''
 - name: Build HTML for `/home/username/Documents/guide`
   asciidoctor_wrapper:
     directory: "/home/username/Documents/guide"
-    in-file: master.adoc
-    out-file: guide.html
+    source_file: master.adoc
+    output_file: guide.html
 '''
 
 RETURN = r'''
@@ -61,13 +61,14 @@ message:
 '''
 
 from ansible.module_utils.basic import AnsibleModule
-
+import os
 
 def run_module():
     # define available arguments/parameters a user can pass to the module
     module_args = dict(
-        name=dict(type='str', required=True),
-        new=dict(type='bool', required=False, default=False)
+        directory=dict(type='str', required=True),
+        source_file=dict(type='str', required=True),
+        output_file=dict(type='str', required=True)
     )
 
     # seed the result dict in the object
@@ -87,30 +88,28 @@ def run_module():
     # supports check mode
     module = AnsibleModule(
         argument_spec=module_args,
-        supports_check_mode=True
+        supports_check_mode=False
     )
-
-    # if the user is working with this module in only check mode we do not
-    # want to make any changes to the environment, just return the current
-    # state with no modifications
-    if module.check_mode:
-        module.exit_json(**result)
 
     # manipulate or modify the state as needed (this is going to be the
     # part where your module will do what it needs to do)
-    result['original_message'] = module.params['name']
-    result['message'] = 'goodbye'
 
-    # use whatever logic you need to determine whether or not this module
-    # made any modifications to your target
-    if module.params['new']:
+    #command result will be 0 for success or 1 for fail
+    if os.path.exists("{}/{}".format(module.params["directory"],module.params["output_file"])):
+        module.exit_json(changed=False,)
+        result['message'] = 'The {} file already exists'.format(module.params["output_file"])
+        result['changed'] = False
+
+    else
+        module.run_command(["asciidoctor", "-b html5", "--out-file {}".format(module.params["output_fule"], "{}".format(module.params["source_file"]])
+        result['message'] = 'The {} file has been created'.format(module.params["output_file"])
         result['changed'] = True
 
     # during the execution of the module, if there is an exception or a
     # conditional state that effectively causes a failure, run
     # AnsibleModule.fail_json() to pass in the message and the result
-    if module.params['name'] == 'fail me':
-        module.fail_json(msg='You requested this to fail', **result)
+    # if module.params['name'] == 'fail me':
+    #   module.fail_json(msg='You requested this to fail', **result)
 
     # in the event of a successful module execution, you will want to
     # simple AnsibleModule.exit_json(), passing the key/value results
