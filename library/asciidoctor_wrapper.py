@@ -78,7 +78,6 @@ def run_module():
     # for consumption, for example, in a subsequent task
     result = dict(
         changed=False,
-        original_message='',
         message=''
     )
 
@@ -95,7 +94,7 @@ def run_module():
     # part where your module will do what it needs to do)
 
     # Declare function variables
-    directory = module.params["dictionary"]
+    directory = module.params["directory"]
     source_file = module.params["source_file"]
     output_file = module.params["output_file"]
 
