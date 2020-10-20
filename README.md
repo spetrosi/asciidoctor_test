@@ -1,7 +1,6 @@
 # Role Name
 
-A template for an ansible role which configures some GNU/Linux subsystem or
-service. A brief description of the role goes here.
+This role runs asciidoctor to build AsciiDoc source files into the HTML5 format. 
 
 ## Requirements
 
@@ -24,8 +23,10 @@ the lifetime.
 Example of setting the variables:
 
 ```yaml
-template_foo: "oof"
-template_bar: "baz"
+backend: "html5"
+in-file: "master.adoc"
+out-file: "build.html"
+directory: "path/to/adoc/files"
 ```
 
 ### Variables Exported by the Role
@@ -50,22 +51,21 @@ that are used from other roles.
 
 ## Example Playbook
 
-Including an example of how to use your role (for instance, with variables
-passed in as parameters) is always nice for users too:
-
 ```yaml
 - hosts: all
   vars:
-    template_foo: "foo foo!"
-    template_bar: "progress bar"
+    backend: "html5"
+    in-file: "master.adoc"
+    out-file: "build.html"
+    directory: "path/to/adoc/files"
 
   roles:
-    - linux-system-roles.template
+    - linux-system-roles.asciidoctor_test
 ```
 
 ## License
 
-Whenever possible, please prefer MIT.
+MIT
 
 ## Author Information
 

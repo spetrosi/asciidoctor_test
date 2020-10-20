@@ -2,15 +2,11 @@
 ---
 galaxy_info:
   # Replace with role's author name:
-  author: John Doe <jdoe@corp.com>
+  author: Sergei Petrosian <spetrosi@redhat.com>
   # Replace with the real description of what is role's purpose:
-  description: Basic template for Linux system roles
+  description: A role that build AsciiDoc source files into  the HTML output.
   # Replace with the company the role's author is member of:
-  company: John Doe, Inc.
-
-  # If the issue tracker for your role is not on github, uncomment the next
-  # line and provide a value
-  # issue_tracker_url: http://example.com/issue/tracker
+  company: Red Hat, Inc.
 
   # Some suggested licenses:
   # - BSD (default)
