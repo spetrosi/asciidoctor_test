@@ -94,15 +94,20 @@ def run_module():
     # manipulate or modify the state as needed (this is going to be the
     # part where your module will do what it needs to do)
 
+    # Declare function variables
+    directory = module.params["dictionary"]
+    source_file = module.params["source_file"]
+    output_file = module.params["output_file"]
+
     #command result will be 0 for success or 1 for fail
-    if os.path.exists("{}/{}".format(module.params["directory"],module.params["output_file"])):
-        module.exit_json(changed=False,)
-        result['message'] = 'The {} file already exists'.format(module.params["output_file"])
+    if os.path.exists(f"{directory}/{output_file}"):
+        module.exit_json(changed=False)
+        result['message'] = f'The {output_file} file already exists'
         result['changed'] = False
 
-    else
-        module.run_command(["asciidoctor", "-b html5", "--out-file {}".format(module.params["output_fule"], "{}".format(module.params["source_file"]])
-        result['message'] = 'The {} file has been created'.format(module.params["output_file"])
+    else:
+        module.run_command(["asciidoctor", "-b html5", f"--out-file {output_file}", f"{source_file}"])
+        result['message'] = f'The {output_file} file has been created'
         result['changed'] = True
 
     # during the execution of the module, if there is an exception or a
