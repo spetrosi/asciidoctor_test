@@ -23,10 +23,9 @@ the lifetime.
 Example of setting the variables:
 
 ```yaml
-backend: "html5"
+directory: "path/to/adoc/files"
 in-file: "master.adoc"
 out-file: "build.html"
-directory: "path/to/adoc/files"
 ```
 
 ### Variables Exported by the Role
@@ -54,10 +53,9 @@ that are used from other roles.
 ```yaml
 - hosts: all
   vars:
-    backend: "html5"
+    directory: "path/to/adoc/files"
     in-file: "master.adoc"
     out-file: "build.html"
-    directory: "path/to/adoc/files"
 
   roles:
     - linux-system-roles.asciidoctor_test
