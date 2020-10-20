@@ -24,8 +24,8 @@ Example of setting the variables:
 
 ```yaml
 directory: "path/to/adoc/files"
-in-file: "master.adoc"
-out-file: "build.html"
+source_file: "master.adoc"
+output_file: "build.html"
 ```
 
 ### Variables Exported by the Role
@@ -54,8 +54,8 @@ that are used from other roles.
 - hosts: all
   vars:
     directory: "path/to/adoc/files"
-    in-file: "master.adoc"
-    out-file: "build.html"
+    source_file: "master.adoc"
+    output_file: "build.html"
 
   roles:
     - linux-system-roles.asciidoctor_test
