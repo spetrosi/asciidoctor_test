@@ -100,14 +100,14 @@ def run_module():
     output_file = module.params["output_file"]
 
     #command result will be 0 for success or 1 for fail
-    if os.path.exists(f"{directory}/{output_file}"):
+    if os.path.exists("{0}/{1}".format(directory, output_file)):
         module.exit_json(changed=False)
-        result['message'] = f'The {output_file} file already exists'
+        result['message'] = 'The {0} file already exists'.format(output_file)
         result['changed'] = False
 
     else:
-        module.run_command(["asciidoctor", "-b html5", f"--out-file {output_file}", f"{source_file}"])
-        result['message'] = f'The {output_file} file has been created'
+        module.run_command(["asciidoctor", "-b html5", "--out-file {0}".format(output_file), "{}".format(source_file)])
+        result['message'] = 'The {0} file has been created'.format(output_file)
         result['changed'] = True
 
     # during the execution of the module, if there is an exception or a
