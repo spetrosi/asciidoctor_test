@@ -13,15 +13,17 @@ Path where the AsciiDoc book that you want to build are stored.
 The filename of the AsciiDoc top level file. For example, master.adoc.
 
 ### output_file
-The filename of the HTML file that you want to build. This file is generated in the directory provided by the directory variable.
+Defines the file where the HTML build is stored.
+The module creates the output file in the directory where the source file is stored.
 
-Example of setting the variables:
+## Example of setting the variables:
 
 ```yaml
 directory: "path/to/adoc/files"
 source_file: "master.adoc"
 output_file: "build.html"
 ```
+
 ## Example Playbook
 
 ```yaml

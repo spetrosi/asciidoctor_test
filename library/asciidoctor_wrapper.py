@@ -25,7 +25,10 @@ options:
         required: true
         type: str
     output_file:
-        description: Defines the file where the HTML build is stored. The module creates the output file in the directory where the source file is stored.
+        description:
+            - >-
+              Defines the file where the HTML build is stored.
+              The module creates the output file in the directory where the source file is stored.
         required: true
         type: str
 
