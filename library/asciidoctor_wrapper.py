@@ -102,18 +102,27 @@ def run_module():
         module.fail_json(name=source_file, msg="ERROR (no such source file)")
 
     elif os.path.exists("{0}/{1}".format(directory, output_file)):
-        module.exit_json(changed=False)
         result['message'] = 'The {0} file already exists'.format(output_file)
         result['changed'] = False
 
     else:
-        # command returns 0 for success or 1 for fail
         (rc, out, err) = module.run_command("asciidoctor -b html5 --out-file {0} {1}".format(output_file, source_file), cwd=directory)
-        result['message'] = 'The {0} file has been created'.format(output_file)
-        result['changed'] = True
-        result['rc'] = rc
-        result['out'] = out
-        result['err'] = err
+
+        if err and not rc:
+            result['message'] = 'The {0} file has been created with an error'.format(output_file)
+            result['changed'] = False
+            result['err'] = err
+
+        elif rc == 1:
+            result['message'] = 'Unable to create the {0} file'.format(output_file)
+            result['changed'] = False
+            result['err'] = err
+            result['rc'] = rc
+
+        elif not err:
+            result['message'] = 'The {0} file has been created successfully'.format(output_file)
+            result['changed'] = True
+            result['err'] = err
 
 
     # during the execution of the module, if there is an exception or a
