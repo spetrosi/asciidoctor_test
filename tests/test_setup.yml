@@ -1,0 +1,14 @@
+---
+- name: Test the asciidoctor role
+  hosts: all
+  remote_user: root
+  become: no
+  tasks:
+    - name: Install git
+      package:
+        name: git
+        state: present
+    - name: Clone the foreman-documentation GitHub repository
+      git: 
+        repo: https://github.com/theforeman/foreman-documentation.git
+        dest: /tmp/foreman-documentation/

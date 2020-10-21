@@ -1,0 +1,22 @@
+---
+- name: Test the asciidoctor role
+  hosts: all
+  remote_user: root
+  become: no
+  vars:
+    test_directory: /tmp/foreman-documentation/guides/doc-Configuring_Load_Balancer
+    source_file: master.adoc
+    output_file: master.html
+  tasks:
+    - name: Test the role
+      import_role:
+        name: asciidoctor_test
+      vars:
+        directory: "{{ test_directory }}"
+        source_file: "{{ source_file }}"
+        output_file: "{{ output_file }}"
+    - name: Download the html file for test purposes
+      fetch:
+        src: "{{ test_directory }}/{{ output_file }}"
+        dest: "./"
+        flat: yes
