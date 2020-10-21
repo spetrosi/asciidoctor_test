@@ -2,10 +2,15 @@
 ---
 - name: Ensure required packages are installed
   block:
-    - name: Try to install asciidoctor with the package module
+    - name: Install asciidoctor requirements
       package:
+        name: ruby
+        state: latest
+    - name: Install asciidoctor
+      gem:
         name: asciidoctor
-        state: present
+        state: latest
+        user_install: no
   rescue:
     - name: Try to install asciidoctor locally from URL
       yum:
