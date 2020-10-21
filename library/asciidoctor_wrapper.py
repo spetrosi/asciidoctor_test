@@ -95,13 +95,19 @@ def run_module():
     source_file = module.params["source_file"]
     output_file = module.params["output_file"]
 
-    #command result will be 0 for success or 1 for fail
-    if os.path.exists("{0}/{1}".format(directory, output_file)):
+    if not os.path.exists("{0}".format(directory)):
+        module.fail_json(name=directory, msg="ERROR (no such directory)")
+
+    elif not os.path.exists("{0}/{1}".format(directory, source_file)):
+        module.fail_json(name=source_file, msg="ERROR (no such source file)")
+
+    elif os.path.exists("{0}/{1}".format(directory, output_file)):
         module.exit_json(changed=False)
         result['message'] = 'The {0} file already exists'.format(output_file)
         result['changed'] = False
 
     else:
+        # command returns 0 for success or 1 for fail
         (rc, out, err) = module.run_command("asciidoctor -b html5 --out-file {0} {1}".format(output_file, source_file), cwd=directory)
         result['message'] = 'The {0} file has been created'.format(output_file)
         result['changed'] = True
