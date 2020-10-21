@@ -1,9 +1,16 @@
 # SPDX-License-Identifier: MIT
 ---
 - name: Ensure required packages are installed
-  package:
-    name: asciidoctor
-    state: present
+  block:
+    - name: Try to install asciidoctor with the package module
+      package:
+        name: asciidoctor
+        state: present
+  rescue:
+    - name: Try to install asciidoctor locally from URL
+      yum:
+        name: http://rpmfind.net/linux/openmandriva/cooker/repository/x86_64/main/release/asciidoctor-2.0.10-1-omv4002.noarch.rpm
+        state: present
 
 - name: Build HTML in {{ directory }} using {{ source_file }}
   asciidoctor_wrapper:
