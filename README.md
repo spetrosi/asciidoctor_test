@@ -22,26 +22,22 @@ If true, recreates the HTML file even if it exists. Dafault: false.
 ## Example of setting the variables:
 
 ```yaml
-directory: "path/to/adoc/files"
-source_file: "master.adoc"
-output_file: "build.html"
+directory: path/to/adoc/files
+source_file: master.adoc
+output_file: build.html
 ```
 
 ## Example Playbook
 
 ```yaml
 - name: Build the art-Release_Notes guide
-  hosts: localhost
+  hosts: all
   vars:
-    test_directory: /home/username/Documents/art-Release_Notes
-  tasks:
-    - name: Test the role
-      import_role:
-        name: asciidoctor_test
-      vars:
-        directory: "{{ test_directory }}"
-        source_file: "master.adoc"
-        output_file: "guide.html"
+    directory: /home/Documents/art-Release_Notes
+    source_file: master.adoc
+    output_file: guide.html
+  roles:
+    - asciidoctor_test
 ```
 
 ## License
