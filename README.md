@@ -2,6 +2,10 @@
 
 This role runs asciidoctor to build AsciiDoc files into the HTML5-formatted output file.
 
+## Requirements
+
+yum or dnf
+
 ## Role Variables
 
 This role requires you to provide three variables:
