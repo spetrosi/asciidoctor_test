@@ -31,7 +31,11 @@ options:
               The module creates the output file in the directory where the source file is stored.
         required: true
         type: str
-
+    force:
+        description: If true, recreates the HTML file even if it exists.
+        required: false
+        type: bool
+        default: false
 author:
     - Sergei Petrosian (@spetrosi)
 '''
@@ -62,7 +66,8 @@ def run_module():
     module_args = dict(
         directory=dict(type='str', required=True),
         source_file=dict(type='str', required=True),
-        output_file=dict(type='str', required=True)
+        output_file=dict(type='str', required=True),
+        force=dict(type='bool', default=False)
     )
 
     # seed the result dict in the object
@@ -91,6 +96,7 @@ def run_module():
     directory = module.params["directory"]
     source_file = module.params["source_file"]
     output_file = module.params["output_file"]
+    force = module.params["force"]
 
     if not os.path.exists("{0}".format(directory)):
         module.fail_json(name=directory, msg="ERROR (no such directory)")
@@ -98,7 +104,7 @@ def run_module():
     elif not os.path.exists("{0}/{1}".format(directory, source_file)):
         module.fail_json(name=source_file, msg="ERROR (no such source file)")
 
-    elif os.path.exists("{0}/{1}".format(directory, output_file)):
+    elif os.path.exists("{0}/{1}".format(directory, output_file)) and force == 0:
         result['message'] = 'The {0} file already exists'.format(output_file)
         result['changed'] = False
 

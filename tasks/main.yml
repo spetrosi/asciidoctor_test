@@ -22,3 +22,4 @@
     directory: "{{ directory }}"
     source_file: "{{ source_file }}"
     output_file: "{{ output_file }}"
+    force: "{{ force }}"

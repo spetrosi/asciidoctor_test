@@ -16,6 +16,9 @@ The filename of the AsciiDoc file that you want to build. For example, master.ad
 Defines the file where the HTML build is stored.
 The module creates the output file in the directory where the source file is stored.
 
+### force
+If true, recreates the HTML file even if it exists. Dafault: false.
+
 ## Example of setting the variables:
 
 ```yaml
