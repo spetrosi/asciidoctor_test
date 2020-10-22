@@ -1,0 +1,25 @@
+---
+- name: Test the asciidoctor role
+  hosts: all
+  remote_user: root
+  become: no
+  vars:
+    test_directory: /tmp/foreman-documentation/guides/doc-Content_Management_Guide
+    test_source_file: master.adoc
+    test_output_file: guide.html
+  tasks:
+    - name: Test the module
+      asciidoctor_wrapper:
+        directory: "{{ test_directory }}"
+        source_file: "{{ test_source_file }}"
+        output_file: "{{ test_output_file }}" 
+        force: False
+      register: debug_out
+    - name: Print debug_out
+      debug:
+        var: debug_out
+    - name: Download the html file for test purposes
+      fetch:
+        src: "{{ test_directory }}/{{ test_output_file }}"
+        dest: "./"
+        flat: yes
