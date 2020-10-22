@@ -107,20 +107,18 @@ def run_module():
 
         if err and not rc:
             result['message'] = 'The {0} file has been created with an error'.format(output_file)
-            result['changed'] = False
+            result['changed'] = True
             result['err'] = err
+            module.warn(result['err'])
 
         elif rc == 1:
-            result['message'] = 'Unable to create the {0} file'.format(output_file)
-            result['changed'] = False
             result['err'] = err
             result['rc'] = rc
+            module.fail_json(msg='Unable to create the {0} file'.format(output_file), **result)
 
         elif not err:
             result['message'] = 'The {0} file has been created successfully'.format(output_file)
             result['changed'] = True
-            result['err'] = err
-
 
     # during the execution of the module, if there is an exception or a
     # conditional state that effectively causes a failure, run
