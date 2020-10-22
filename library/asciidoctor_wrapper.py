@@ -62,7 +62,6 @@ from ansible.module_utils.basic import AnsibleModule
 import os
 
 def run_module():
-    # define available arguments/parameters a user can pass to the module
     module_args = dict(
         directory=dict(type='str', required=True),
         source_file=dict(type='str', required=True),
@@ -70,29 +69,16 @@ def run_module():
         force=dict(type='bool', default=False)
     )
 
-    # seed the result dict in the object
-    # we primarily care about changed and state
-    # changed is if this module effectively modified the target
-    # state will include any data that you want your module to pass back
-    # for consumption, for example, in a subsequent task
     result = dict(
         changed=False,
         message=''
     )
 
-    # the AnsibleModule object will be our abstraction working with Ansible
-    # this includes instantiation, a couple of common attr would be the
-    # args/params passed to the execution, as well as if the module
-    # supports check mode
     module = AnsibleModule(
         argument_spec=module_args,
         supports_check_mode=False
     )
 
-    # manipulate or modify the state as needed (this is going to be the
-    # part where your module will do what it needs to do)
-
-    # Declare function variables
     directory = module.params["directory"]
     source_file = module.params["source_file"]
     output_file = module.params["output_file"]
@@ -126,14 +112,6 @@ def run_module():
             result['message'] = 'The {0} file has been created successfully'.format(output_file)
             result['changed'] = True
 
-    # during the execution of the module, if there is an exception or a
-    # conditional state that effectively causes a failure, run
-    # AnsibleModule.fail_json() to pass in the message and the result
-    # if module.params['name'] == 'fail me':
-    #   module.fail_json(msg='You requested this to fail', **result)
-
-    # in the event of a successful module execution, you will want to
-    # simple AnsibleModule.exit_json(), passing the key/value results
     module.exit_json(**result)
 
 
