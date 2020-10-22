@@ -9,11 +9,11 @@ DOCUMENTATION = r'''
 ---
 module: asciidoctor_wrapper
 
-short_description: Build HTML output from AsciiDoc books.
+short_description: Build HTML file from AsciiDoc files.
 
 version_added: "1.0.0"
 
-description: This module uses the asciidoctor CLI tool to build AsciiDoc books into the HTML output.
+description: This module uses the asciidoctor CLI tool to build AsciiDoc files into an HTML file.
 
 options:
     directory:
@@ -21,7 +21,7 @@ options:
         required: true
         type: str
     source_file:
-        description: Defines the top level AsciiDoc file that is used for the build.
+        description: Defines the AsciiDoc file that you want to use for the build.
         required: true
         type: str
     output_file:
@@ -47,17 +47,11 @@ EXAMPLES = r'''
 '''
 
 RETURN = r'''
-# These are examples of possible return values, and in general should use other names for return values.
-original_message:
-    description: The original name param that was passed in.
+# The module returns the following values:
+err:
+    description: The error message that asciidoctor returns when build fails..
     type: str
-    returned: always
-    sample: 'hello world'
-message:
-    description: The output message that the test module generates.
-    type: str
-    returned: always
-    sample: 'goodbye'
+    returned: when build fails
 '''
 
 from ansible.module_utils.basic import AnsibleModule

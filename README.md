@@ -1,16 +1,16 @@
 # asciidoctor_test
 
-This role runs asciidoctor to build an AsciiDoc book into the HTML5 format.
+This role runs asciidoctor to build AsciiDoc files into the HTML5-formatted output file.
 
 ## Role Variables
 
 This role requires you to provide three variables:
 
 ### directory
-Path where the AsciiDoc book that you want to build are stored.
+Path where the AsciiDoc file that you want to build are stored.
 
 ### source_file
-The filename of the AsciiDoc top level file. For example, master.adoc.
+The filename of the AsciiDoc file that you want to build. For example, master.adoc.
 
 ### output_file
 Defines the file where the HTML build is stored.
