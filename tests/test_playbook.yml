@@ -6,7 +6,6 @@
     test_source_file: master.adoc
     test_output_file: guide.html
   tasks:
-
     - name: Prepare for the test. This block is not needed if the AsciiDoc files that you want to build exist on hosts already.
       block:
         - name: Ensure git is installed to prepare for the test.

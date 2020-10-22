@@ -15,7 +15,6 @@
 
 - name: Clean the local system after the test is finished
   hosts: localhost
-
   tasks:
     - name: Remove the HTML file
       file:
