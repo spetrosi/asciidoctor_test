@@ -1,0 +1,42 @@
+---
+- name: asciidoctor_test role test
+  hosts: all
+  vars:
+    test_directory: /tmp/foreman-documentation/guides/doc-Content_Management_Guide
+    test_source_file: master.adoc
+    test_output_file: guide.html
+  tasks:
+
+    - name: Prepare for the test. This block is not needed if the AsciiDoc files that you want to build exist on hosts already.
+      block:
+        - name: Ensure git is installed to prepare for the test.
+          package:
+            name: git
+            state: present
+        - name: Clone the foreman-documentation GitHub repository to build AsciiDoc files from it to HTML
+          git:
+            repo: https://github.com/theforeman/foreman-documentation.git
+            dest: /tmp/foreman-documentation/
+
+    - name: Demonstrate the asciidoctor_test role
+      import_role:
+        name: asciidoctor_test
+      vars:
+        directory: "{{ test_directory }}"
+        source_file: "{{ test_source_file }}"
+        output_file: "{{ test_output_file }}"
+        force: false
+
+    - name: Demonstrate that the asciidoctor_test role is idempotent
+      import_role:
+        name: asciidoctor_test
+      vars:
+        directory: "{{ test_directory }}"
+        source_file: "{{ test_source_file }}"
+        output_file: "{{ test_output_file }}"
+
+    - name: Fetch the built HTML files to the localhost for verification
+      fetch:
+        src: "{{ test_directory }}/{{ test_output_file }}"
+        dest: "./result-for-{{ inventory_hostname }}-{{ test_output_file }}"
+        flat: yes

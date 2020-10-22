@@ -1,35 +1,23 @@
 ---
-- name: Clean the vm system after the test is finished
+- name: Clean hosts after the test is finished
   hosts: all
-  remote_user: root
-  become: no
   tasks:
-
     - name: Remove the foreman-documentation directory
       file: 
         path: /tmp/foreman-documentation/
         state: absent
 
-    - name: Ensure gem is installed
-      yum:
-        name: gem
-        state: present
-
-    - name: Remove asciidoctor
+    - name: Remove asciidoctor gem
       gem:
         name: asciidoctor
         state: absent
         user_install: no
 
-    - name: Remove gem
-      yum:
-        name: gem
-        state: absent
-
 - name: Clean the local system after the test is finished
   hosts: localhost
+
   tasks:
     - name: Remove the HTML file
       file:
-        path: ./guide.html
+        path: ./result-for*
         state: absent
